@@ -5,7 +5,7 @@
     color: rgb(49, 49, 49);
     background-color: rgb(255, 255, 255);
     width: 100%;
-    z-index: -2;
+    z-index: 1;
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
     box-shadow: -11px 10px 4px rgba(101, 99, 119, 0.25);
@@ -95,91 +95,91 @@
 
 /* Types */
 .bug {
-    background: rgb(146, 188, 44);
-    background: linear-gradient(0deg, rgba(146, 188, 44, 1) 0%, rgba(170, 217, 57, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(146, 188, 44) !important;
+    background: linear-gradient(0deg, rgba(146, 188, 44, 1) 0%, rgba(170, 217, 57, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }
 
 .dark {
-    background: rgb(42, 42, 42);
-    background: linear-gradient(0deg, rgba(42, 42, 42, 1) 0%, rgba(56, 56, 56, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(42, 42, 42) !important;
+    background: linear-gradient(0deg, rgba(42, 42, 42, 1) 0%, rgba(56, 56, 56, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }
 
 .dragon {
-    background: rgb(112, 56, 248);
-    background: linear-gradient(0deg, rgba(112, 56, 248, 1) 0%, rgba(144, 96, 248, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(112, 56, 248) !important;
+    background: linear-gradient(0deg, rgba(112, 56, 248, 1) 0%, rgba(144, 96, 248, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }
 
 .electric {
-    background: rgb(248, 208, 48);
-    background: linear-gradient(0deg, rgba(248, 208, 48, 1) 0%, rgba(248, 216, 112, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(248, 208, 48) !important;
+    background: linear-gradient(0deg, rgba(248, 208, 48, 1) 0%, rgba(248, 216, 112, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }
 
 .fairy {
-    background: rgb(238, 153, 172);
-    background: linear-gradient(0deg, rgba(238, 153, 172, 1) 0%, rgba(252, 191, 204, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(238, 153, 172) !important;
+    background: linear-gradient(0deg, rgba(238, 153, 172, 1) 0%, rgba(252, 191, 204, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }
 
 .fighting {
-    background: rgb(192, 48, 40);
-    background: linear-gradient(0deg, rgba(192, 48, 40, 1) 0%, rgba(224, 80, 64, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(192, 48, 40) !important;
+    background: linear-gradient(0deg, rgba(192, 48, 40, 1) 0%, rgba(224, 80, 64, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }
 
 .fire {
-    background: rgb(240, 128, 48);
-    background: linear-gradient(0deg, rgba(240, 128, 48, 1) 0%, rgba(248, 152, 56, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(240, 128, 48) !important;
+    background: linear-gradient(0deg, rgba(240, 128, 48, 1) 0%, rgba(248, 152, 56, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }
 
 .flying {
-    background: rgb(168, 144, 240);
-    background: linear-gradient(0deg, rgba(168, 144, 240, 1) 0%, rgba(184, 160, 240, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(168, 144, 240) !important;
+    background: linear-gradient(0deg, rgba(168, 144, 240, 1) 0%, rgba(184, 160, 240, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }
 
 .ghost {
-    background: rgb(112, 88, 152);
-    background: linear-gradient(0deg, rgba(112, 88, 152, 1) 0%, rgba(136, 112, 176, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(112, 88, 152) !important;
+    background: linear-gradient(0deg, rgba(112, 88, 152, 1) 0%, rgba(136, 112, 176, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }
 
 .grass {
-    background: rgb(120, 200, 80);
-    background: linear-gradient(0deg, rgba(120, 200, 80, 1) 0%, rgba(144, 224, 104, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(120, 200, 80) !important;
+    background: linear-gradient(0deg, rgba(120, 200, 80, 1) 0%, rgba(144, 224, 104, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }
 
 .ground {
-    background: rgb(224, 192, 104);
-    background: linear-gradient(0deg, rgba(224, 192, 104, 1) 0%, rgba(240, 208, 120, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(224, 192, 104) !important;
+    background: linear-gradient(0deg, rgba(224, 192, 104, 1) 0%, rgba(240, 208, 120, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }
 
 .ice {
-    background: rgb(152, 216, 216);
-    background: linear-gradient(0deg, rgba(152, 216, 216, 1) 0%, rgba(176, 232, 232, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(152, 216, 216) !important;
+    background: linear-gradient(0deg, rgba(152, 216, 216, 1) 0%, rgba(176, 232, 232, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }
 
 .normal {
-    background: rgb(168, 168, 120);
-    background: linear-gradient(0deg, rgba(168, 168, 120, 1) 0%, rgba(184, 184, 136, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(168, 168, 120) !important;
+    background: linear-gradient(0deg, rgba(168, 168, 120, 1) 0%, rgba(184, 184, 136, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }
 
 .poison {
-    background: rgb(160, 64, 160);
-    background: linear-gradient(0deg, rgba(160, 64, 160, 1) 0%, rgba(184, 88, 184, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(160, 64, 160) !important;
+    background: linear-gradient(0deg, rgba(160, 64, 160, 1) 0%, rgba(184, 88, 184, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }
 
 .psychic {
-    background: rgb(248, 88, 136);
-    background: linear-gradient(0deg, rgba(248, 88, 136, 1) 0%, rgba(248, 120, 168, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(248, 88, 136) !important;
+    background: linear-gradient(0deg, rgba(248, 88, 136, 1) 0%, rgba(248, 120, 168, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }
 
 .rock {
-    background: rgb(184, 160, 56);
-    background: linear-gradient(0deg, rgba(184, 160, 56, 1) 0%, rgba(200, 176, 72, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(184, 160, 56) !important;
+    background: linear-gradient(0deg, rgba(184, 160, 56, 1) 0%, rgba(200, 176, 72, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }
 
 .steel {
-    background: rgb(184, 184, 208);
-    background: linear-gradient(0deg, rgba(184, 184, 208, 1) 0%, rgba(200, 200, 216, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(184, 184, 208) !important;
+    background: linear-gradient(0deg, rgba(184, 184, 208, 1) 0%, rgba(200, 200, 216, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }
 
 .water {
-    background: rgb(104, 144, 240);
-    background: linear-gradient(0deg, rgba(104, 144, 240, 1) 0%, rgba(120, 160, 240, 1) 1%, rgba(255, 255, 255, 1) 100%);
+    background: rgb(104, 144, 240) !important;
+    background: linear-gradient(0deg, rgba(104, 144, 240, 1) 0%, rgba(120, 160, 240, 1) 1%, rgba(255, 255, 255, 1) 100%) !important;
 }

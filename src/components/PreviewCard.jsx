@@ -3,7 +3,7 @@ import styles from './PreviewCard.module.css'
 import typeIcons from '../assets/typesIcons/typesIcons.js'
 import TypesIcon from './TypesIcon.jsx'
 
-function PreviewCard ({ isFusion, imgSrc, pokemonId, pokeName, types, fusionId, onDragStartFunc }) {
+function PreviewCard ({ isFusion, imgSrc, pokemonId, pokeName, types, fusionId, onDragStartFunc, onDropF }) {
   let typesJsx = [<TypesIcon key={0} imgUrl='' name='unknown' isCheckbox={false} />,
     <TypesIcon key={1} imgUrl='' name='unknown' isCheckbox={false} />]
   if (types) {
@@ -19,15 +19,17 @@ function PreviewCard ({ isFusion, imgSrc, pokemonId, pokeName, types, fusionId, 
       <div
         className={styles.cardWrapper}
         id={fusionId}
+        onDrop={onDropF}
+        onDragOver={(e) => e.preventDefault()}
       >
         <div className={styles.pokemonPreview}>
-          <div className={`${styles.circle}`} />
-          <img src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/0.png' alt='' />
-          <img src={typeIcons.normal} alt='' />
+          <div className={`${styles.circle} ${types ? styles[types[0]] : ''}`} />
+          <img src={imgSrc || 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/0.png'} alt='' />
+          <img src={types ? typeIcons[types[0]] : typeIcons.normal} alt='' />
         </div>
         <div className={styles.cardBody}>
           <div className={styles.nameWrapper}>
-            <h4>Nº {fusionId}</h4>
+            <h4>Nº {pokemonId || fusionId}</h4>
             <h2>{pokeName}</h2>
           </div>
           <div className={styles.bodyTypes}>

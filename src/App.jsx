@@ -1,5 +1,5 @@
 import styles from './App.module.css'
-import { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import PreviewCard from './components/PreviewCard.jsx'
 import NavigationBar from './components/NavigationBar.jsx'
 import GetPokemons from './services/GetPokemons.js'
@@ -11,6 +11,11 @@ function App () {
   const [firstPokemons, setFirstPokemons] = useState([])
   const [allPokemons, setAllPokemons] = useState([])
   const [pokemonCards, setPokemonCards] = useState([])
+  const [fusionCards, setFusionCards] = useState({
+    unknown1: (<PreviewCard isFusion pokeName='Unknown' fusionId='unknown1' onDropF={onDrop} />),
+    unknown2: (<PreviewCard isFusion pokeName='Unknown' fusionId='unknown2' onDropF={onDrop} />)
+  })
+  const [dragInfo, setDragInfo] = useState({ fusionID: 'unknown1', pokeID: 1 })
   const [offset, setOffset] = useState(0)
   const [query, setQuery] = useState('')
   const queryRef = useRef(query)
@@ -155,6 +160,7 @@ function App () {
   }
   // SEARCH QUERY UPDATE
   useEffect(() => {
+    console.log(allPokemons)
     queryRef.current = query
     if (query === '') {
       setOffset(0)
@@ -168,41 +174,83 @@ function App () {
     console.log(checkBoxs)
   }, [checkBoxs])
 
-  // CADA VEZ ESTO ES MAS LARGO Y ME DA MAS ASCO PERO VOY A ACABARLO PORQUE REFACTORIZARLO ME
-  // VA A DAR UN DOLOR DE HUEVOS TREMENDO
-
   // DRAG AND DROP
-  function findParentWithId (element, targetId) {
-    console.log('ELEMENT', element)
-    if (element.id.includes(targetId)) {
-      return element
-    }
-    return findParentWithId(element.parentElement)
-  }
+  // function findParentWithId (element, targetId) {
+  //   console.log('ELEMENT', element)
+  //   if (element.id.includes(targetId)) {
+  //     return element
+  //   }
+  //   return findParentWithId(element.parentElement)
+  // }
 
-  function findParentWithClassName (element, className) {
-    const divs = document.querySelectorAll('[class*="cardWrapper"]')
-    divs.forEach(currentDiv => {
-      // findParentWithId(currentDiv,element)
-    })
-    return divs
-  }
+  // function findParentWithClassName (element, className) {
+  //   const divs = document.querySelectorAll('[class*="cardWrapper"]')
+  //   divs.forEach(currentDiv => {
+  //     // findParentWithId(currentDiv,element)
+  //   })
+  //   return divs
+  // }
 
   function onDragStart (e) {
     e.stopPropagation()
-    console.log('ON DRAG START: ', e, e.currentTarget)
-    const previewImg = e.currentTarget
+    e.dataTransfer.setData('card', e.currentTarget.id)
+    console.log('ON DRAG START: ', e)
+  }
 
-    e.dataTransfer.setDragImage(previewImg, 0, 0)
+  // ON DROP
+  function onDrop (e) {
+    e.preventDefault()
+    const pokeId = e.dataTransfer.getData('card')
+    const dragInfo = { fusionID: e.currentTarget.id, pokeID: pokeId - 1 }
+    setDragInfo(dragInfo)
+    console.log('ON DROP', e.currentTarget)
+  }
+  useEffect(() => {
+    if (dragInfo && allPokemons[0]) {
+      console.log('DRAG ALL POKE')
+      const imgSrc =
+      allPokemons[dragInfo.pokeID].sprites.other.home.front_default
+        ? allPokemons[dragInfo.pokeID].sprites.other.home.front_default
+        : (allPokemons[dragInfo.pokeID].sprites.front_default
+            ? allPokemons[dragInfo.pokeID].sprites.front_default
+            : allPokemons[dragInfo.pokeID].sprites.other['official-artwork'].front_default)
+
+      const newFusionCard = (
+        <PreviewCard
+          isFusion
+          pokeName={allPokemons[dragInfo.pokeID].name}
+          fusionId={dragInfo.fusionID} onDropF={onDrop}
+          imgSrc={imgSrc}
+          pokemonId={dragInfo.pokeID + 1}
+          types={allPokemons[dragInfo.pokeID].types.map(type => type.type.name)}
+        />
+      )
+
+      setFusionCards((prevState) => {
+        const newState = { ...prevState }
+        newState[dragInfo.fusionID] = newFusionCard
+        return newState
+      })
+      console.log('Drag Info:', dragInfo, newFusionCard)
+    }
+  }, [dragInfo])
+  // FILL CARD
+  function fillCard (index) {
+    console.log(allPokemons) // En el log sale undefined, cuando en verdad tiene 1302 pokemons dentro
   }
   return (
     <div className={styles.App}>
       <div className={styles.appBody}>
         <header className={styles.bodyHeader}>
-          <NavigationBar updateSearch={updateSearch} value={query} updateCheckBox={updateCheckBox} checkBoxs={checkBoxs} />
+          <NavigationBar
+            updateSearch={updateSearch}
+            value={query}
+            updateCheckBox={updateCheckBox}
+            checkBoxs={checkBoxs}
+          />
         </header>
         <main>
-          <FusionSection onDragFunction={onDragStart} />
+          <FusionSection fusionCards={fusionCards} />
           <div className={styles.pokemonGrid}>{pokemonCards}</div>
         </main>
       </div>
