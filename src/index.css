@@ -1,0 +1,203 @@
+:root {
+	width: 100%;
+	--color-bug: rgba(146, 188, 44, 1);
+	--color-dark: rgba(42, 42, 42, 1);
+	--color-dragon: rgba(112, 56, 248, 1);
+	--color-electric: rgb(228, 195, 66);
+	--color-fairy: rgba(238, 153, 172, 1);
+	--color-fighting: rgba(192, 48, 40, 1);
+	--color-fire: rgba(240, 128, 48, 1);
+	--color-flying: rgb(162, 188, 236);
+	--color-ghost: rgba(112, 88, 152, 1);
+	--color-grass: rgba(120, 200, 80, 1);
+	--color-ground: rgba(224, 192, 104, 1);
+	--color-ice: rgba(152, 216, 216, 1);
+	--color-normal: rgb(168, 168, 120);
+	--color-poison: rgba(160, 64, 160, 1);
+	--color-psychic: rgba(248, 88, 136, 1);
+	--color-rock: rgba(184, 160, 56, 1);
+	--color-steel: rgba(184, 184, 208, 1);
+	--color-water: rgba(104, 144, 240, 1);
+	--color-greyText: #828282;
+	background: url("./assets//images/body_bg.png")
+}
+
+
+
+
+@font-face {
+	font-family: 'Signika-Bold';
+	src: url('/src/assets/fonts/Signika-Bold.ttf') format('truetype');
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Signika-SemiBold';
+	src: url('/src/assets/fonts/Signika-SemiBold.ttf') format('truetype');
+	font-weight: 600;
+	/* Puedes ajustar el valor según lo necesites */
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Signika-Light';
+	src: url('/src/assets/fonts/Signika-Light.ttf') format('truetype');
+	font-weight: 300;
+	/* Puedes ajustar el valor según lo necesites */
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Signika-Medium';
+	src: url('/src/assets/fonts/Signika-Medium.ttf') format('truetype');
+	font-weight: 500;
+	/* Puedes ajustar el valor según lo necesites */
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Signika-Regular';
+	src: url('/src/assets/fonts/Signika-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*Reset*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	box-sizing: border-box;
+	font-family: "Signike-Regular", sans-serif;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+}
+
+ol,
+ul {
+	list-style: none;
+}
+
+blockquote,
+q {
+	quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+html,
+body {
+	width: 100%;
+}

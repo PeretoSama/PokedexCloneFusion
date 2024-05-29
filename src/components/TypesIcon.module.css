@@ -1,0 +1,563 @@
+/* No Checkbox */
+
+.iconWrapper {
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.typeIconWrapper {
+    display: flex;
+    flex-direction: row;
+    border-radius: 25px;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5px;
+    padding-right: 10px;
+    width: 100%;
+    height: 60%;
+    gap: 5px;
+
+}
+
+.iconImg {
+    width: 25px;
+    height: 25px;
+    background-color: #EBEBEB;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+
+
+}
+
+.typeName {
+    font-size: 0.8rem;
+    color: #EBEBEB;
+    font-weight: bold;
+}
+
+/* Checkbox */
+
+
+.typeCheckboxIconWrapper {
+    display: flex;
+    flex-direction: row;
+    border-radius: 25px;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5px;
+    padding-right: 10px;
+    width: 100%;
+    height: 85%;
+    gap: 5px;
+    position: relative;
+}
+
+.checkBoxiconImg {
+    width: 25px;
+    height: 25px;
+    background-color: #EBEBEB;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+
+    svg {
+        fill: grey;
+    }
+
+
+}
+
+.typeCheckBox {
+    position: absolute;
+    z-index: 2;
+    margin: 0;
+    opacity: 0;
+
+}
+
+
+/* TypeColors */
+.bug {
+    background-color: var(--color-bug);
+}
+
+.typeCheckBox:hover+.bug,
+.typeCheckBox:checked+.bug {
+    background-color: var(--color-bug);
+
+    svg {
+        fill: var(--color-bug);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.bug::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-bug);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.dark {
+    background-color: var(--color-dark);
+}
+
+.typeCheckBox:hover+.dark,
+.typeCheckBox:checked+.dark {
+    background-color: var(--color-dark);
+
+    svg {
+        fill: var(--color-dark);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.dark::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-dark);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.dragon {
+    background-color: var(--color-dragon);
+}
+
+.typeCheckBox:hover+.dragon,
+.typeCheckBox:checked+.dragon {
+    background-color: var(--color-dragon);
+
+    svg {
+        fill: var(--color-dragon);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.dragon::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-dragon);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.electric {
+    background-color: var(--color-electric);
+}
+
+.typeCheckBox:hover+.electric,
+.typeCheckBox:checked+.electric {
+    background-color: var(--color-electric);
+
+    svg {
+        fill: var(--color-electric);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.electric::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-electric);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.fairy {
+    background-color: var(--color-fairy);
+}
+
+.typeCheckBox:hover+.fairy,
+.typeCheckBox:checked+.fairy {
+    background-color: var(--color-fairy);
+
+    svg {
+        fill: var(--color-fairy);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.fairy::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-fairy);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.fighting {
+    background-color: var(--color-fighting);
+}
+
+.typeCheckBox:hover+.fighting,
+.typeCheckBox:checked+.fighting {
+    background-color: var(--color-fighting);
+
+    svg {
+        fill: var(--color-fighting);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.fighting::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-fighting);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.fire {
+    background-color: var(--color-fire);
+}
+
+.typeCheckBox:hover+.fire,
+.typeCheckBox:checked+.fire {
+    background-color: var(--color-fire);
+
+    svg {
+        fill: var(--color-fire);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.fire::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-fire);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.flying {
+    background-color: var(--color-flying);
+}
+
+.typeCheckBox:hover+.flying,
+.typeCheckBox:checked+.flying {
+    background-color: var(--color-flying);
+
+    svg {
+        fill: var(--color-flying);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.flying::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-flying);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ghost {
+    background-color: var(--color-ghost);
+}
+
+.typeCheckBox:hover+.ghost,
+.typeCheckBox:checked+.ghost {
+    background-color: var(--color-ghost);
+
+    svg {
+        fill: var(--color-ghost);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.ghost::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-ghost);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.grass {
+    background-color: var(--color-grass);
+}
+
+.typeCheckBox:hover+.grass,
+.typeCheckBox:checked+.grass {
+    background-color: var(--color-grass);
+
+    svg {
+        fill: var(--color-grass);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.grass::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-grass);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ground {
+    background-color: var(--color-ground);
+}
+
+.typeCheckBox:hover+.ground,
+.typeCheckBox:checked+.ground {
+    background-color: var(--color-ground);
+
+    svg {
+        fill: var(--color-ground);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.ground::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-ground);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ice {
+    background-color: var(--color-ice);
+}
+
+.typeCheckBox:hover+.ice,
+.typeCheckBox:checked+.ice {
+    background-color: var(--color-ice);
+
+    svg {
+        fill: var(--color-ice);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.ice::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-ice);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.normal {
+    background-color: var(--color-normal);
+}
+
+.typeCheckBox:hover+.normal,
+.typeCheckBox:checked+.normal {
+    background-color: var(--color-normal);
+
+    svg {
+        fill: var(--color-normal);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.normal::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-normal);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.poison {
+    background-color: var(--color-poison);
+}
+
+.typeCheckBox:hover+.poison,
+.typeCheckBox:checked+.poison {
+    background-color: var(--color-poison);
+
+    svg {
+        fill: var(--color-poison);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.poison::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-poison);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.psychic {
+    background-color: var(--color-psychic);
+}
+
+.typeCheckBox:hover+.psychic,
+.typeCheckBox:checked+.psychic {
+    background-color: var(--color-psychic);
+
+    svg {
+        fill: var(--color-psychic);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.psychic::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-psychic);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.rock {
+    background-color: var(--color-rock);
+}
+
+.typeCheckBox:hover+.rock,
+.typeCheckBox:checked+.rock {
+    background-color: var(--color-rock);
+
+    svg {
+        fill: var(--color-rock);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.rock::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-rock);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.steel {
+    background-color: var(--color-steel);
+}
+
+.typeCheckBox:hover+.steel,
+.typeCheckBox:checked+.steel {
+    background-color: var(--color-steel);
+
+    svg {
+        fill: var(--color-steel);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.steel::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-steel);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.water {
+    background-color: var(--color-water);
+}
+
+.typeCheckBox:hover+.water,
+.typeCheckBox:checked+.water {
+    background-color: var(--color-water);
+
+    svg {
+        fill: var(--color-water);
+    }
+}
+
+.typeCheckBox:checked+.typeCheckboxIconWrapper.water::after {
+    content: "";
+    width: 90%;
+    height: 90%;
+    border: 6px inset var(--color-water);
+    border-radius: 25px;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.unknown {
+    background-color: rgb(128, 128, 128);
+}
+
+.checkbox {
+    background-color: grey;
+}
