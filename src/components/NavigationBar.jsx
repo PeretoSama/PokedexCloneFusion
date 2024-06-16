@@ -6,7 +6,6 @@ function NavigationBar ({ updateSearch, value, updateCheckBox, checkBoxs }) {
   const [typeToggleState, setTypeToggleState] = useState(false)
   const [regionToggleState, setRegionToggleState] = useState(false)
   useEffect(() => {
-    console.log('Type', typeToggleState, regionToggleState)
   }, [typeToggleState, regionToggleState])
 
   return (

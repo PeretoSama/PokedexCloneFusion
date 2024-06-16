@@ -32,8 +32,8 @@
 
 .pokemonPreview img:nth-of-type(2) {
     position: absolute;
-    width: 100px;
-    height: 100px;
+    width: 35%;
+    height: 35%;
     top: 5px;
     z-index: 0;
     opacity: 0.6;
@@ -44,8 +44,8 @@
     position: absolute;
     background: rgb(128, 128, 128);
     background: linear-gradient(0deg, rgb(128, 128, 128) 0%, rgb(128, 128, 128) 1%, rgba(255, 255, 255, 1) 100%);
-    width: 350px;
-    height: 300px;
+    width: 450px;
+    height: 600px;
     border-radius: 50%;
     z-index: -1;
     bottom: 50px;

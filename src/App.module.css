@@ -49,3 +49,8 @@ main {
     z-index: 0;
 
 }
+@media (max-width: 405px) {
+    .pokemonGrid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+}

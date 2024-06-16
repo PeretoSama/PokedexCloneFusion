@@ -2,22 +2,23 @@ import styles from './App.module.css'
 import React, { useEffect, useState, useRef } from 'react'
 import PreviewCard from './components/PreviewCard.jsx'
 import NavigationBar from './components/NavigationBar.jsx'
-import GetPokemons from './services/GetPokemons.js'
 import FusionSection from './components/FusionSection.jsx'
-
+import Pokemons from './pokemonsReduced.js'
+import FusionModal from './components/FusionModal.jsx'
 function App () {
   console.log('App component executed')
   const limit = 35
-  const [firstPokemons, setFirstPokemons] = useState([])
-  const [allPokemons, setAllPokemons] = useState([])
   const [pokemonCards, setPokemonCards] = useState([])
   const [fusionCards, setFusionCards] = useState({
     unknown1: (<PreviewCard isFusion pokeName='Unknown' fusionId='unknown1' onDropF={onDrop} />),
     unknown2: (<PreviewCard isFusion pokeName='Unknown' fusionId='unknown2' onDropF={onDrop} />)
   })
-  const [dragInfo, setDragInfo] = useState({ fusionID: 'unknown1', pokeID: 1 })
+  const [dragInfo, setDragInfo] = useState({ fusionID: 'unknown1', pokeID: '-1' })
   const [offset, setOffset] = useState(0)
   const [query, setQuery] = useState('')
+  const [modalOn, setModalOn] = useState(false)
+  const [modalInfo, setModalInfo] = useState({ img1: '', img2: '', img3: '', img4: '' })
+  const [allowCloseModal, setAllowCloseModal] = useState(false)
   const queryRef = useRef(query)
   const checkboxes = {
     electric: false,
@@ -51,12 +52,12 @@ function App () {
   function updateCheckBox (e) {
     checkboxesRef.current[e.target.name] = e.target.checked
     if (isAnyCheckboxOn(checkboxesRef)) {
-      const filteredPokes = filterPokemonByType(checkboxesRef.current, allPokemons, queryRef)
+      const filteredPokes = filterPokemonByType(checkboxesRef.current, Pokemons, queryRef)
       const filteredCards = createPokemonCards(filteredPokes, 0, filteredPokes.length)
       setPokemonCards(filteredCards)
     } else {
       console.log('offfff')
-      setPokemonCards(createPokemonCards(firstPokemons, 0, limit))
+      setPokemonCards(createPokemonCards(Pokemons, 0, limit))
     }
 
     setCheckBoxs((prevCheckboxes) => {
@@ -67,23 +68,25 @@ function App () {
   }
   // CREATE POKEMON CARDS
   function createPokemonCards (pokemons, from, to) {
+    console.log('From: ', from, 'To :', to)
     const pokeCards = []
     for (let i = 0 + from; i < to; i++) {
       // hay un problema con koraidon asi hay que hardcodearle la imgsrc
 
       let imgSrc =
-      pokemons[i].sprites.other.home.front_default
-        ? pokemons[i].sprites.other.home.front_default
-        : (pokemons[i].sprites.front_default
-            ? pokemons[i].sprites.front_default
-            : pokemons[i].sprites.other['official-artwork'].front_default)
+      pokemons[i].sprites.home
+        ? pokemons[i].sprites.home
+        : (pokemons[i].sprites.default
+            ? pokemons[i].sprites.default
+            : pokemons[i].sprites.officialArtwork)
       if (pokemons[i].name.toLowerCase().includes('koraidon')) { imgSrc = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1007.png' }
+      if (pokemons[i].name.toLowerCase().includes('miraidon')) { imgSrc = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1008.png' }
       pokeCards.push(<PreviewCard
         key={pokemons[i].id}
         imgSrc={imgSrc}
         pokemonId={pokemons[i].id ? pokemons[i].id : i}
         pokeName={pokemons[i].name[0].toUpperCase() + pokemons[i].name.slice(1)}
-        types={pokemons[i].types.map(type => type.type.name)}
+        types={pokemons[i].types}
         onDragStartFunc={onDragStart}
                      />)
     }
@@ -92,21 +95,11 @@ function App () {
   // PETITION FOR THE FIRST LIMIT POKEMONS
   useEffect(() => {
     const getFirstsPokemons = async () => {
-      const data = await GetPokemons(limit, 0)
-      setFirstPokemons(data)
-      setPokemonCards(createPokemonCards(data, offset, limit))
+      setPokemonCards(createPokemonCards(Pokemons, offset, limit))
     }
     getFirstsPokemons()
   }, [])
-  // PETITION FOR ALL POKEMONS
-  useEffect(() => {
-    const getAllPokemons = async () => {
-      const data = await GetPokemons(1302, 0)
-      setAllPokemons(data)
-    }
-    getAllPokemons()
-  }, [])
-  // FAKE INFINITE SCROLL
+
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement
     if (scrollTop + clientHeight >= scrollHeight - 10) {
@@ -125,7 +118,8 @@ function App () {
   // CHANGE POKEMON CARDS WHEN OFFSET UPDATES
   useEffect(() => {
     if (offset > 0) {
-      const newPokemonCards = createPokemonCards(allPokemons, offset, Math.min(offset + limit, 1302))
+      console.log('OFFSET: ', offset + limit, Math.min(offset + limit, 1301))
+      const newPokemonCards = createPokemonCards(Pokemons, offset, Math.min(offset + limit, 1301))
       setPokemonCards(prevCards => [...prevCards, ...newPokemonCards])
     }
   }, [offset])
@@ -145,7 +139,7 @@ function App () {
     const selectedTypes = Object.keys(checkboxs).filter(type => checkboxs[type])
     const result = pokemonList.filter(pokemon => {
       // SAVE TYPE NAMES OF INVIDIVUAL POKEMON
-      const pokemonTypes = pokemon.types.map(type => type.type.name)
+      const pokemonTypes = pokemon.types
       if (selectedTypes.length === 1) {
         return pokemonTypes.includes(selectedTypes[0])
       } else {
@@ -160,13 +154,13 @@ function App () {
   }
   // SEARCH QUERY UPDATE
   useEffect(() => {
-    console.log(allPokemons)
+    console.log(Pokemons)
     queryRef.current = query
     if (query === '') {
       setOffset(0)
-      setPokemonCards(createPokemonCards(firstPokemons, 0, firstPokemons.length))
+      setPokemonCards(createPokemonCards(Pokemons, 0, 35))
     } else {
-      const searchPokemonCards = filterPokemonByType(checkboxesRef.current, allPokemons, queryRef)
+      const searchPokemonCards = filterPokemonByType(checkboxesRef.current, Pokemons, queryRef)
       setPokemonCards(createPokemonCards(searchPokemonCards, 0, searchPokemonCards.length))
     }
   }, [query])
@@ -206,23 +200,24 @@ function App () {
     console.log('ON DROP', e.currentTarget)
   }
   useEffect(() => {
-    if (dragInfo && allPokemons[0]) {
+    console.log('DRAAAAAG INFOOOOOO', dragInfo)
+    if (dragInfo.pokeID >= 0 && Pokemons[0]) {
       console.log('DRAG ALL POKE')
       const imgSrc =
-      allPokemons[dragInfo.pokeID].sprites.other.home.front_default
-        ? allPokemons[dragInfo.pokeID].sprites.other.home.front_default
-        : (allPokemons[dragInfo.pokeID].sprites.front_default
-            ? allPokemons[dragInfo.pokeID].sprites.front_default
-            : allPokemons[dragInfo.pokeID].sprites.other['official-artwork'].front_default)
+      Pokemons[dragInfo.pokeID].sprites.home
+        ? Pokemons[dragInfo.pokeID].sprites.home
+        : (Pokemons[dragInfo.pokeID].sprites.default
+            ? Pokemons[dragInfo.pokeID].sprites.default
+            : Pokemons[dragInfo.pokeID].sprites.officialArtwork)
 
       const newFusionCard = (
         <PreviewCard
           isFusion
-          pokeName={allPokemons[dragInfo.pokeID].name}
+          pokeName={Pokemons[dragInfo.pokeID].name}
           fusionId={dragInfo.fusionID} onDropF={onDrop}
           imgSrc={imgSrc}
           pokemonId={dragInfo.pokeID + 1}
-          types={allPokemons[dragInfo.pokeID].types.map(type => type.type.name)}
+          types={Pokemons[dragInfo.pokeID].types}
         />
       )
 
@@ -236,11 +231,55 @@ function App () {
   }, [dragInfo])
   // FILL CARD
   function fillCard (index) {
-    console.log(allPokemons) // En el log sale undefined, cuando en verdad tiene 1302 pokemons dentro
+    console.log(Pokemons) // En el log sale undefined, cuando en verdad tiene 1302 pokemons dentro
   }
+  const handleSubmit = () => {
+    if (!modalOn) {
+      setAllowCloseModal(() => { return false })
+      console.log(fusionCards.unknown1.props)
+      const postData = {
+        prompt: `${fusionCards.unknown1.props.pokeName}+${fusionCards.unknown2.props.pokeName}`,
+        image1: fusionCards.unknown1.props.imgSrc,
+        image2: fusionCards.unknown2.props.imgSrc
+      }
+      fetch('http://localhost:5000/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data)
+          setModalInfo({
+
+            img1: data.images[0].url,
+            img2: data.images[1].url,
+            img3: data.images[2].url,
+            img4: data.images[3].url
+
+          })
+          setAllowCloseModal(() => { return true })
+        })
+        .catch((error) => {
+          console.error('Error:', error)
+          setAllowCloseModal(() => { return true })
+        })
+      setModalOn((modal) => { return !modal })
+
+      console.log(postData)
+    }
+  }
+
+  function setModalOff () {
+    setModalOn(() => { return false })
+  }
+  console.log('TEST', Pokemons.length)
   return (
     <div className={styles.App}>
       <div className={styles.appBody}>
+        {modalOn ? (<FusionModal pokeModalInfo={modalInfo} setModalOff={setModalOff} allowCloseModal={allowCloseModal} />) : ''}
         <header className={styles.bodyHeader}>
           <NavigationBar
             updateSearch={updateSearch}
@@ -250,7 +289,7 @@ function App () {
           />
         </header>
         <main>
-          <FusionSection fusionCards={fusionCards} />
+          <FusionSection fusionCards={fusionCards} submitbutton={handleSubmit} />
           <div className={styles.pokemonGrid}>{pokemonCards}</div>
         </main>
       </div>
