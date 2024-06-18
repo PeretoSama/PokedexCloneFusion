@@ -6,21 +6,18 @@ import FusionSection from './components/FusionSection.jsx'
 import Pokemons from './pokemonsReduced.js'
 import FusionModal from './components/FusionModal.jsx'
 function App () {
-  console.log('App component executed')
-  const limit = 35
   const [pokemonCards, setPokemonCards] = useState([])
   const [fusionCards, setFusionCards] = useState({
     unknown1: (<PreviewCard isFusion pokeName='Unknown' fusionId='unknown1' onDropF={onDrop} />),
     unknown2: (<PreviewCard isFusion pokeName='Unknown' fusionId='unknown2' onDropF={onDrop} />)
   })
-  const [dragInfo, setDragInfo] = useState({ fusionID: 'unknown1', pokeID: '-1' })
   const [offset, setOffset] = useState(0)
-  const [query, setQuery] = useState('')
+  const limit = 35
+  const [dragInfo, setDragInfo] = useState({ fusionID: 'unknown1', pokeID: '-1' })
   const [modalOn, setModalOn] = useState(false)
-  const [modalInfo, setModalInfo] = useState({ img1: '', img2: '', img3: '', img4: '' })
+  const [modalInfo, setModalInfo] = useState({})
   const [allowCloseModal, setAllowCloseModal] = useState(false)
-  const queryRef = useRef(query)
-  const checkboxes = {
+  const typeCheckboxes = {
     electric: false,
     normal: false,
     fire: false,
@@ -41,34 +38,154 @@ function App () {
     fairy: false
 
   }
-  const checkboxesRef = useRef(checkboxes)
-  const [checkBoxs, setCheckBoxs] = useState(checkboxes)
+  const generations = {
+    generation1: { region: 'kanto', fromIndex: 0, toIndex: 151 },
+    generation2: { region: 'johto', fromIndex: 151, toIndex: 251 },
+    generation3: { region: 'hoenn', fromIndex: 251, toIndex: 386 },
+    generation4: { region: 'sinnoh', fromIndex: 386, toIndex: 493 },
+    generation5: { region: 'unova', fromIndex: 495, toIndex: 649 },
+    generation6: { region: 'kalos', fromIndex: 649, toIndex: 721 },
+    generation7: { region: 'alola', fromIndex: 721, toIndex: 809 },
+    generation8: { region: 'galar', fromIndex: 809, toIndex: 905 },
+    generation9: { region: 'paldea', fromIndex: 905, toIndex: 1025 }
 
-  // UPDATE SEARCH QUERY
-  function updateSearch (onChangeResponse) {
-    setQuery(onChangeResponse.target.value)
   }
+  const regionsCheckboxes = {
+    kanto: false,
+    johto: false,
+    hoenn: false,
+    sinnoh: false,
+    unova: false,
+    kalos: false,
+    alola: false,
+    galar: false,
+    paldea: false
+
+  }
+  const [query, setQuery] = useState('')
+  const queryRef = useRef(query)
+  const typeCheckboxesRef = useRef(typeCheckboxes)
+  const [typeCheckBoxs, setTypeCheckBoxs] = useState(typeCheckboxes)
+  const regionCheckboxesRef = useRef(regionsCheckboxes)
+  const [regionCheckBoxs, setRegionCheckBoxs] = useState(regionsCheckboxes)
+
   // UPDATE TYPE CHECKBOXS
   function updateCheckBox (e) {
-    checkboxesRef.current[e.target.name] = e.target.checked
-    if (isAnyCheckboxOn(checkboxesRef)) {
-      const filteredPokes = filterPokemonByType(checkboxesRef.current, Pokemons, queryRef)
-      const filteredCards = createPokemonCards(filteredPokes, 0, filteredPokes.length)
-      setPokemonCards(filteredCards)
-    } else {
-      console.log('offfff')
-      setPokemonCards(createPokemonCards(Pokemons, 0, limit))
-    }
-
-    setCheckBoxs((prevCheckboxes) => {
-      const newCheckboxes = prevCheckboxes
+    typeCheckboxesRef.current[e.target.name] = e.target.checked
+    setTypeCheckBoxs((prevCheckboxes) => {
+      const newCheckboxes = { ...prevCheckboxes }
       newCheckboxes[e.target.name] = e.target.checked
       return newCheckboxes
     })
   }
+  // UPDATE REGION CHECKBOXS
+  function updateRegionCheckbox (e) {
+    regionCheckboxesRef.current[e.target.name] = e.target.checked
+    setRegionCheckBoxs((prevCheckboxes) => {
+      const newCheckboxes = { ...prevCheckboxes }
+      newCheckboxes[e.target.name] = e.target.checked
+      return newCheckboxes
+    })
+  }
+  // SEARCH FILTER
+  function filterPokemonByType (checkboxs, pokemonList) {
+    // SAVE KEYS OF CHECKED CHECKBOX
+    const selectedTypes = Object.keys(checkboxs).filter(type => checkboxs[type])
+    const result = pokemonList.filter(pokemon => {
+      // SAVE TYPE NAMES OF INVIDIVUAL POKEMON
+      const pokemonTypes = pokemon.types
+      if (selectedTypes.length === 1) {
+        return pokemonTypes.includes(selectedTypes[0])
+      } else {
+        return selectedTypes.every(type => pokemonTypes.includes(type))
+      }
+    })
+
+    return result
+  }
+  function filterPokemonByRegion (checkboxs, pokemonList) {
+    // array of the selected regions
+    console.log('FILTER REGIO ', checkboxs)
+    const selectedRegions = Object.keys(checkboxs).filter(region => checkboxs[region])
+    const filteredPokemons = []
+    for (const region in selectedRegions) {
+      for (const generation in generations) {
+        if (generations[generation].region === selectedRegions[region]) {
+          const { fromIndex, toIndex } = generations[generation]
+          filteredPokemons.push(...pokemonList.slice(fromIndex, toIndex))
+        }
+      }
+    }
+
+    return filteredPokemons.filter(pokemon => pokemon.name.includes(queryRef.current))
+  }
+  // UPDATE SEARCH QUERY
+  function updateSearch (onChangeResponse) {
+    setQuery(onChangeResponse.target.value)
+    queryRef.current = onChangeResponse.target.value
+  }
+  function filterPokemonByQuery (query, pokemonList) {
+    const filteredPokemons = pokemonList.filter(pokemon =>
+      pokemon.name.toLowerCase().includes(query.toLowerCase())
+    )
+    // filteredPokemons.sort((a, b) => {
+    //   const aName = a.name.toLowerCase()
+    //   const bName = b.name.toLowerCase()
+
+    //   const aStartsWithQuery = aName.startsWith(query.toLowerCase())
+    //   const bStartsWithQuery = bName.startsWith(query.toLowerCase())
+
+    //   if (aStartsWithQuery && !bStartsWithQuery) {
+    //     return -1 // a debe ir antes que b
+    //   } else if (!aStartsWithQuery && bStartsWithQuery) {
+    //     return 1 // b debe ir antes que a
+    //   } else {
+    //     return 0 // No cambiar el orden
+    //   }
+    // })
+    return filteredPokemons
+  }
+  // SEARCH QUERY UPDATE
+  useEffect(() => {
+    console.log('QUERY: ', query, 'QUERY REF', queryRef, 'TYPES: ', typeCheckBoxs, 'REGIONS: ', regionCheckBoxs)
+    if (!query) {
+      let noQueryPokemons = Pokemons
+      console.log('NO QUERY POKE:', noQueryPokemons)
+      if (isAnyCheckboxOn(regionCheckboxesRef)) {
+        noQueryPokemons = filterPokemonByRegion(regionCheckBoxs, noQueryPokemons)
+        console.log('NO QUERY REGIONS: ', regionCheckBoxs, noQueryPokemons)
+      }
+      if (isAnyCheckboxOn(typeCheckboxesRef)) {
+        noQueryPokemons = filterPokemonByType(typeCheckBoxs, noQueryPokemons)
+        console.log('NO QUERY TYPES: ', noQueryPokemons)
+      }
+
+      if (isAnyCheckboxOn(typeCheckboxesRef) || isAnyCheckboxOn(regionCheckboxesRef)) {
+        setPokemonCards(createPokemonCards(noQueryPokemons, 0, noQueryPokemons.length))
+      }
+      if (!isAnyCheckboxOn(typeCheckboxesRef) && !isAnyCheckboxOn(regionCheckboxesRef)) {
+        setOffset(0)
+        setPokemonCards(createPokemonCards(Pokemons, 0, 35))
+      }
+    } else {
+      let searchPokemons = Pokemons
+      console.log('Query All Search Pokemons:', searchPokemons)
+      if (isAnyCheckboxOn(regionCheckboxesRef)) {
+        console.log('query regions pkemons:', searchPokemons)
+        searchPokemons = filterPokemonByRegion(regionCheckBoxs, searchPokemons)
+        console.log('query regions pkemons afterfilter:', searchPokemons)
+      }
+      if (isAnyCheckboxOn(typeCheckboxesRef)) {
+        console.log('Query checkboxes', typeCheckboxesRef.current)
+        searchPokemons = filterPokemonByType(typeCheckBoxs, searchPokemons)
+      }
+      searchPokemons = filterPokemonByQuery(queryRef.current, searchPokemons)
+      console.log('Query All Search PokemonsAFTER:', searchPokemons)
+      setPokemonCards(createPokemonCards(searchPokemons, 0, searchPokemons.length))
+    }
+  }, [query, typeCheckBoxs, regionCheckBoxs])
   // CREATE POKEMON CARDS
   function createPokemonCards (pokemons, from, to) {
-    console.log('From: ', from, 'To :', to)
     const pokeCards = []
     for (let i = 0 + from; i < to; i++) {
       // hay un problema con koraidon asi hay que hardcodearle la imgsrc
@@ -103,7 +220,7 @@ function App () {
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement
     if (scrollTop + clientHeight >= scrollHeight - 10) {
-      if (queryRef.current === '' && !isAnyCheckboxOn(checkboxesRef)) {
+      if (queryRef.current === '' && !isAnyCheckboxOn(typeCheckboxesRef) && !isAnyCheckboxOn(regionCheckboxesRef)) {
         setOffset(prevOffset => prevOffset + limit)
       }
     }
@@ -118,7 +235,6 @@ function App () {
   // CHANGE POKEMON CARDS WHEN OFFSET UPDATES
   useEffect(() => {
     if (offset > 0) {
-      console.log('OFFSET: ', offset + limit, Math.min(offset + limit, 1301))
       const newPokemonCards = createPokemonCards(Pokemons, offset, Math.min(offset + limit, 1301))
       setPokemonCards(prevCards => [...prevCards, ...newPokemonCards])
     }
@@ -133,44 +249,9 @@ function App () {
     }
     return false
   }
-  // SEARCH FILTER
-  function filterPokemonByType (checkboxs, pokemonList, query) {
-    // SAVE KEYS OF CHECKED CHECKBOX
-    const selectedTypes = Object.keys(checkboxs).filter(type => checkboxs[type])
-    const result = pokemonList.filter(pokemon => {
-      // SAVE TYPE NAMES OF INVIDIVUAL POKEMON
-      const pokemonTypes = pokemon.types
-      if (selectedTypes.length === 1) {
-        return pokemonTypes.includes(selectedTypes[0])
-      } else {
-        return selectedTypes.every(type => pokemonTypes.includes(type))
-      }
-    })
-    if (query.current === '') {
-      return result
-    } else {
-      return result.filter(pokemon => pokemon.name.includes(queryRef.current))
-    }
-  }
-  // SEARCH QUERY UPDATE
-  useEffect(() => {
-    console.log(Pokemons)
-    queryRef.current = query
-    if (query === '') {
-      setOffset(0)
-      setPokemonCards(createPokemonCards(Pokemons, 0, 35))
-    } else {
-      const searchPokemonCards = filterPokemonByType(checkboxesRef.current, Pokemons, queryRef)
-      setPokemonCards(createPokemonCards(searchPokemonCards, 0, searchPokemonCards.length))
-    }
-  }, [query])
-  useEffect(() => {
-    console.log(checkBoxs)
-  }, [checkBoxs])
 
   // DRAG AND DROP
   // function findParentWithId (element, targetId) {
-  //   console.log('ELEMENT', element)
   //   if (element.id.includes(targetId)) {
   //     return element
   //   }
@@ -188,7 +269,6 @@ function App () {
   function onDragStart (e) {
     e.stopPropagation()
     e.dataTransfer.setData('card', e.currentTarget.id)
-    console.log('ON DRAG START: ', e)
   }
 
   // ON DROP
@@ -197,12 +277,9 @@ function App () {
     const pokeId = e.dataTransfer.getData('card')
     const dragInfo = { fusionID: e.currentTarget.id, pokeID: pokeId - 1 }
     setDragInfo(dragInfo)
-    console.log('ON DROP', e.currentTarget)
   }
   useEffect(() => {
-    console.log('DRAAAAAG INFOOOOOO', dragInfo)
     if (dragInfo.pokeID >= 0 && Pokemons[0]) {
-      console.log('DRAG ALL POKE')
       const imgSrc =
       Pokemons[dragInfo.pokeID].sprites.home
         ? Pokemons[dragInfo.pokeID].sprites.home
@@ -226,17 +303,12 @@ function App () {
         newState[dragInfo.fusionID] = newFusionCard
         return newState
       })
-      console.log('Drag Info:', dragInfo, newFusionCard)
     }
   }, [dragInfo])
-  // FILL CARD
-  function fillCard (index) {
-    console.log(Pokemons) // En el log sale undefined, cuando en verdad tiene 1302 pokemons dentro
-  }
+
   const handleSubmit = () => {
     if (!modalOn) {
       setAllowCloseModal(() => { return false })
-      console.log(fusionCards.unknown1.props)
       const postData = {
         prompt: `${fusionCards.unknown1.props.pokeName}+${fusionCards.unknown2.props.pokeName}`,
         image1: fusionCards.unknown1.props.imgSrc,
@@ -251,15 +323,8 @@ function App () {
       })
         .then(response => response.json())
         .then(data => {
-          console.log('Success:', data)
-          setModalInfo({
-
-            img1: data.images[0].url,
-            img2: data.images[1].url,
-            img3: data.images[2].url,
-            img4: data.images[3].url
-
-          })
+          setModalInfo(data)
+          console.log(data)
           setAllowCloseModal(() => { return true })
         })
         .catch((error) => {
@@ -275,17 +340,18 @@ function App () {
   function setModalOff () {
     setModalOn(() => { return false })
   }
-  console.log('TEST', Pokemons.length)
   return (
     <div className={styles.App}>
       <div className={styles.appBody}>
-        {modalOn ? (<FusionModal pokeModalInfo={modalInfo} setModalOff={setModalOff} allowCloseModal={allowCloseModal} />) : ''}
+        {modalOn ? (<FusionModal pokeModalInfo={modalInfo} setModalOff={setModalOff} allowCloseModal={allowCloseModal} fusionCards={fusionCards} />) : ''}
         <header className={styles.bodyHeader}>
           <NavigationBar
             updateSearch={updateSearch}
             value={query}
-            updateCheckBox={updateCheckBox}
-            checkBoxs={checkBoxs}
+            updateTypeCheckbox={updateCheckBox}
+            checkBoxs={typeCheckBoxs}
+            generations={generations}
+            updateRegionCheckBoxes={updateRegionCheckbox}
           />
         </header>
         <main>

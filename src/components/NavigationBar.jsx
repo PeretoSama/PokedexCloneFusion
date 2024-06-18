@@ -1,8 +1,8 @@
 import styles from './NavigationBar.module.css'
-import typeIcons from '../assets/typesIcons/typesIcons.js'
 import TypesIcon from './TypesIcon.jsx'
 import { useEffect, useState } from 'react'
-function NavigationBar ({ updateSearch, value, updateCheckBox, checkBoxs }) {
+// import DropDown from './DropDown.jsx'
+function NavigationBar ({ updateSearch, value, updateTypeCheckbox, updateRegionCheckBoxes, checkBoxs, generations }) {
   const [typeToggleState, setTypeToggleState] = useState(false)
   const [regionToggleState, setRegionToggleState] = useState(false)
   useEffect(() => {
@@ -20,28 +20,44 @@ function NavigationBar ({ updateSearch, value, updateCheckBox, checkBoxs }) {
           <input checked={regionToggleState} onChange={() => { setRegionToggleState((prevstate) => { return !prevstate }) }} type='checkbox' className={styles.typesToggle} name='regionToggle' id='regionToggle' />
           <label htmlFor='regionToggle' className={styles.regionToggleLabel}>Regions</label>
         </div>
+        <div className={styles.dropDownWrapper}>
+          TEST
+        </div>
       </div>
       <div className={`${styles.checkBoxWrapper} ${typeToggleState ? styles.show : ''}`}>
-        <TypesIcon imgUrl={typeIcons.bug} name='bug' size='small' isCheckbox onCheckChange={updateCheckBox} />
-        <TypesIcon imgUrl={typeIcons.dark} name='dark' size='small' isCheckbox onCheckChange={updateCheckBox} />
-        <TypesIcon imgUrl={typeIcons.dragon} name='dragon' size='small' isCheckbox onCheckChange={updateCheckBox} />
-        <TypesIcon imgUrl={typeIcons.electric} name='electric' size='small' isCheckbox onCheckChange={updateCheckBox} />
-        <TypesIcon imgUrl={typeIcons.fairy} name='fairy' size='small' isCheckbox onCheckChange={updateCheckBox} />
-        <TypesIcon imgUrl={typeIcons.fighting} name='fighting' size='small' isCheckbox onCheckChange={updateCheckBox} />
-        <TypesIcon imgUrl={typeIcons.fire} name='fire' size='small' isCheckbox onCheckChange={updateCheckBox} />
-        <TypesIcon imgUrl={typeIcons.flying} name='flying' size='small' isCheckbox onCheckChange={updateCheckBox} />
-        <TypesIcon imgUrl={typeIcons.ghost} name='ghost' size='small' isCheckbox onCheckChange={updateCheckBox} />
-        <TypesIcon imgUrl={typeIcons.grass} name='grass' size='small' isCheckbox onCheckChange={updateCheckBox} />
-        <TypesIcon imgUrl={typeIcons.ground} name='ground' size='small' isCheckbox onCheckChange={updateCheckBox} />
-        <TypesIcon imgUrl={typeIcons.ice} name='ice' size='small' isCheckbox onCheckChange={updateCheckBox} />
-        <TypesIcon imgUrl={typeIcons.normal} name='normal' size='small' isCheckbox onCheckChange={updateCheckBox} />
-        <TypesIcon imgUrl={typeIcons.poison} name='poison' size='small' isCheckbox onCheckChange={updateCheckBox} />
-        <TypesIcon imgUrl={typeIcons.psychic} name='psychic' size='small' isCheckbox onCheckChange={updateCheckBox} />
-        <TypesIcon imgUrl={typeIcons.rock} name='rock' size='small' isCheckbox onCheckChange={updateCheckBox} />
-        <TypesIcon imgUrl={typeIcons.steel} name='steel' size='small' isCheckbox onCheckChange={updateCheckBox} />
-        <TypesIcon imgUrl={typeIcons.water} name='water' size='small' isCheckbox onCheckChange={updateCheckBox} />
+        <TypesIcon name='bug' isCheckbox onCheckChange={updateTypeCheckbox} />
+        <TypesIcon name='dark' isCheckbox onCheckChange={updateTypeCheckbox} />
+        <TypesIcon name='dragon' isCheckbox onCheckChange={updateTypeCheckbox} />
+        <TypesIcon name='electric' isCheckbox onCheckChange={updateTypeCheckbox} />
+        <TypesIcon name='fairy' isCheckbox onCheckChange={updateTypeCheckbox} />
+        <TypesIcon name='fighting' isCheckbox onCheckChange={updateTypeCheckbox} />
+        <TypesIcon name='fire' isCheckbox onCheckChange={updateTypeCheckbox} />
+        <TypesIcon name='flying' isCheckbox onCheckChange={updateTypeCheckbox} />
+        <TypesIcon name='ghost' isCheckbox onCheckChange={updateTypeCheckbox} />
+        <TypesIcon name='grass' isCheckbox onCheckChange={updateTypeCheckbox} />
+        <TypesIcon name='ground' isCheckbox onCheckChange={updateTypeCheckbox} />
+        <TypesIcon name='ice' isCheckbox onCheckChange={updateTypeCheckbox} />
+        <TypesIcon name='normal' isCheckbox onCheckChange={updateTypeCheckbox} />
+        <TypesIcon name='poison' isCheckbox onCheckChange={updateTypeCheckbox} />
+        <TypesIcon name='psychic' isCheckbox onCheckChange={updateTypeCheckbox} />
+        <TypesIcon name='rock' isCheckbox onCheckChange={updateTypeCheckbox} />
+        <TypesIcon name='steel' isCheckbox onCheckChange={updateTypeCheckbox} />
+        <TypesIcon name='water' isCheckbox onCheckChange={updateTypeCheckbox} />
 
       </div>
+      <div className={`${styles.regionWrapper} ${regionToggleState ? styles.show : ''}`}>
+        <TypesIcon name={generations.generation1.region} size='small' isCheckbox onCheckChange={updateRegionCheckBoxes} isRegion />
+        <TypesIcon name={generations.generation2.region} size='small' isCheckbox onCheckChange={updateRegionCheckBoxes} isRegion />
+        <TypesIcon name={generations.generation3.region} size='small' isCheckbox onCheckChange={updateRegionCheckBoxes} isRegion />
+        <TypesIcon name={generations.generation4.region} size='small' isCheckbox onCheckChange={updateRegionCheckBoxes} isRegion />
+        <TypesIcon name={generations.generation5.region} size='small' isCheckbox onCheckChange={updateRegionCheckBoxes} isRegion />
+        <TypesIcon name={generations.generation6.region} size='small' isCheckbox onCheckChange={updateRegionCheckBoxes} isRegion />
+        <TypesIcon name={generations.generation7.region} size='small' isCheckbox onCheckChange={updateRegionCheckBoxes} isRegion />
+        <TypesIcon name={generations.generation8.region} size='small' isCheckbox onCheckChange={updateRegionCheckBoxes} isRegion />
+        <TypesIcon name={generations.generation9.region} size='small' isCheckbox onCheckChange={updateRegionCheckBoxes} isRegion />
+
+      </div>
+
     </div>
   )
 }
